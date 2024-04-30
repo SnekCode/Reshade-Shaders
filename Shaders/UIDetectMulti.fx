@@ -1,6 +1,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 
 // UIDetectMulti By Kaiser
+// Updated to use pixel ratios by SnekCode
 // v. 1.6.0
 // License: CC By 4.0
 // Based on work from Brussels1
@@ -17,7 +18,16 @@
 
 //Reshade.fxh version independence
 #undef BUFFER_PIXEL_SIZE
+
+/**
+
+BUFFER_RCP_WIDTH Reciprocal of the backbuffer width (equals 1.0 / BUFFER_WIDTH)
+BUFFER_RCP_HEIGHT Reciprocal of the backbuffer height (equals 1.0 / BUFFER_HEIGHT)
+
+*/
+
 #define BUFFER_PIXEL_SIZE float2(BUFFER_RCP_WIDTH, BUFFER_RCP_HEIGHT)
+#define BUFFER_PIXEL_ACTUAL float2(BUFFER_WIDTH, BUFFER_HEIGHT)
 texture texBackBuffer : COLOR;
 sampler BackBuffer { Texture = texBackBuffer; };
 
@@ -706,7 +716,7 @@ float4 PS_UIDetect(float4 pos : SV_Position, float2 texcoord : TEXCOORD) : SV_Ta
 	}
 	if (uinumber != -1){
 		for (int i=0; i < 3; i++){
-			pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_SIZE;
+			pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_ACTUAL * BUFFER_PIXEL_SIZE;
 			pixelColor = round(tex2D(BackBuffer, float2(pixelCoord)).rgb * 255);
 			uiPixelColor = UIPixelRGB[uinumber].rgb;
 			diff = abs(pixelColor - uiPixelColor);
@@ -763,7 +773,7 @@ float4 PS_UIDetectTimer(float4 pos : SV_Position, float2 texcoord : TEXCOORD) : 
 		}  
 		if (uinumber != -1){
 			for (int i=0; i < 3; i++){
-				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_SIZE;
+				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_ACTUAL * BUFFER_PIXEL_SIZE;
 				pixelColor = round(tex2D(BackBuffer, float2(pixelCoord)).rgb * 255);
 				uiPixelColor = UIPixelRGB[uinumber].rgb;
 				diff = abs(pixelColor - uiPixelColor);
@@ -821,7 +831,7 @@ float4 PS_UIDetectTimer(float4 pos : SV_Position, float2 texcoord : TEXCOORD) : 
 		}
 		if (uinumber != -1){
 			for (int i=0; i < 3; i++){
-				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_SIZE;
+				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_ACTUAL * BUFFER_PIXEL_SIZE;
 				pixelColor = round(tex2D(BackBuffer, float2(pixelCoord)).rgb * 255);
 				uiPixelColor = UIPixelRGB[uinumber].rgb;
 				diff = abs(pixelColor - uiPixelColor);
@@ -879,7 +889,7 @@ float4 PS_UIDetectTimer(float4 pos : SV_Position, float2 texcoord : TEXCOORD) : 
 		}
 		if (uinumber != -1){
 			for (int i=0; i < 3; i++){
-				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_SIZE;
+				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_ACTUAL * BUFFER_PIXEL_SIZE;
 				pixelColor = round(tex2D(BackBuffer, float2(pixelCoord)).rgb * 255);
 				uiPixelColor = UIPixelRGB[uinumber].rgb;
 				diff = abs(pixelColor - uiPixelColor);
@@ -937,7 +947,7 @@ float4 PS_UIDetectTimer(float4 pos : SV_Position, float2 texcoord : TEXCOORD) : 
 		}
 		if (uinumber != -1){
 			for (int i=0; i < 3; i++){
-				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_SIZE;
+				pixelCoord = UIPixelCoord_UINr[uinumber].xy * BUFFER_PIXEL_ACTUAL * BUFFER_PIXEL_SIZE;
 				pixelColor = round(tex2D(BackBuffer, float2(pixelCoord)).rgb * 255);
 				uiPixelColor = UIPixelRGB[uinumber].rgb;
 				diff = abs(pixelColor - uiPixelColor);

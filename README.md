@@ -1,3 +1,8 @@
+Rewrite of the UI Detect from https://github.com/KaiserThompson/Reshade-Shaders
+
+This version accepts ratios instead of pixels.
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Reshade Placement Order
 
